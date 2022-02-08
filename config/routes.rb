@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
 
+      # Non-RESTful routes
+      get '/merchants/find_all', to: 'search#index'
+      get '/items/find', to: 'search#show'
+
       # RESTful routes
       resources :merchants, only: [:index, :show] do
         resources :items, only: [:index]
@@ -11,10 +15,6 @@ Rails.application.routes.draw do
       resources :items, only: [:index, :show, :create, :update, :destroy] do
         resource :merchant, only: [:show]
       end
-
-      # Non-RESTful routes
-      get '/merchants/find_all', to: 'search#index'
-      get '/items/find', to: 'search#show'
 
     end
   end
