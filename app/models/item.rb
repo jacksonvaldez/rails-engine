@@ -17,4 +17,14 @@ class Item < ApplicationRecord
     # Returns an array of strings(errors)
   end
 
+  def self.order_by_name
+    # Item.order('lower(name)')
+    Item.order(Arel.sql('LOWER(name)'))
+  end
+
+  def self.search_by_name(name)
+    items = Item.order_by_name
+    items.where("name ILIKE ?", "%#{name}%")
+  end
+
 end

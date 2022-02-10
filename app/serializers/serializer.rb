@@ -14,4 +14,16 @@ class Serializer
     }
   end
 
+  def self.no_record_found
+    {
+      data: {}
+    }
+  end
+
+  def self.no_records_found
+    {
+      data: []
+    }
+  end
+
 end
