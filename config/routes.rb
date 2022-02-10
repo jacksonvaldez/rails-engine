@@ -13,12 +13,11 @@ Rails.application.routes.draw do
       end
 
       # RESTful routes
-      resources :merchants, only: [:index, :show] do
-        resources :items, only: [:index]
-      end
-      resources :items, only: [:index, :show, :create, :update, :destroy] do
-        resource :merchant, only: [:show]
-      end
+      resources :merchants, only: [:index, :show]
+      get '/merchants/:merchant_id/items', to: 'merchants/items#index'
+
+      resources :items, only: [:index, :show, :create, :update, :destroy]
+      get '/items/:item_id/merchant', to: 'items/merchants#show'
 
     end
   end

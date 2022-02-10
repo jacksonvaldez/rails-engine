@@ -1,19 +1,8 @@
 class Api::V1::ItemsController < ApplicationController
 
   def index
-    if params[:merchant_id].present?
-      merchant = Merchant.where(id: params[:merchant_id]).first
-
-      if merchant.class == Merchant
-        items = Item.where(merchant_id: params[:merchant_id])
-        render json: ItemSerializer.items_index(items)
-      else
-        render json: Serializer.return_error("invalid merchant id"), status: 404
-      end
-    else
-      items = Item.all
-      render json: ItemSerializer.items_index(items)
-    end
+    items = Item.all
+    render json: ItemSerializer.items_index(items)
   end
 
   def show
