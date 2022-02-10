@@ -5,12 +5,8 @@ Rails.application.routes.draw do
     namespace :v1 do
 
       # Non-RESTful routes
-      namespace :merchants do
-        get '/find_all', to: 'search#index'
-      end
-      namespace :items do
-        get '/find', to: 'search#show'
-      end
+      get '/merchants/find_all', to: 'merchants/search#index'
+      get '/items/find', to: 'items/search#show'
 
       # RESTful routes
       resources :merchants, only: [:index, :show]
@@ -26,6 +22,5 @@ Rails.application.routes.draw do
   # app/models/invoice.rb
     # refactor without using ruby
     # make it so it doesnt go through every invoice in the database
-  # any controller actions that are called from multiple routes
 
 end
