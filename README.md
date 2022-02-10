@@ -1,5 +1,5 @@
 # Rails Engine
-Rails engine is an API rails server, built as the backend functionality for a ficticous e-commerce platform. The frontend can be built seperately but is not included. Rails engine consists of a series of api endpoints.
+Rails engine is an API rails server, built as the backend functionality for a ficticous e-commerce platform. Rails engine consists of a series of api endpoints for the frontend to work with. The frontend of the application is not included.
 
 # Schema
 schema here
