@@ -41,6 +41,17 @@ class Api::V1::ItemsController < ApplicationController
     end
   end
 
+  def destroy
+    item = Item.where(id: params[:id]).first
+
+    if item.class == Item
+      item.destroy
+      Invoice.destroy_by_item_count
+    else
+      render json: ItemSerializer.return_error(['invalid item id']), status: 404
+    end
+  end
+
   private
 
   def item_params
