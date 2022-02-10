@@ -8,7 +8,7 @@ class Item < ApplicationRecord
   validates_presence_of :description
   validates_presence_of :unit_price
 
-  def error_messages # Only run if the model object has failed to save to the database
+  def error_messages # Only run if the model object has failed to save or update to the database
     errors.messages.flat_map do |attribute, errors|
       errors.map do |error|
         "#{attribute} #{error}"

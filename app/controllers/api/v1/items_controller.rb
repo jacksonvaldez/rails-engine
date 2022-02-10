@@ -26,6 +26,21 @@ class Api::V1::ItemsController < ApplicationController
     end
   end
 
+  def update
+    item = Item.where(id: params[:id]).first
+
+    if item.class == Item
+      if item.update(item_params)
+        render json: ItemSerializer.items_show(item)
+      else
+        errors = item.error_messages
+        render json: ItemSerializer.return_error(errors), status: 400
+      end
+    else
+      render json: ItemSerializer.return_error(['invalid item id']), status: 404
+    end
+  end
+
   private
 
   def item_params
