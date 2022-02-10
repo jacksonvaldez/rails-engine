@@ -30,6 +30,8 @@ RSpec.describe Invoice do
 
   describe "::destroy_by_item_count" do
     it 'destroys invoices that dont have any items' do
+      expect(Invoice.first).to be_a(Invoice)
+
       Invoice.destroy_by_item_count
 
       expect(Invoice.first).to eq(nil)
