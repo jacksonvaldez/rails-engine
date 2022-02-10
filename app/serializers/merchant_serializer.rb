@@ -31,9 +31,10 @@ class MerchantSerializer
     }
   end
 
-  def self.invalid_id
+  def self.return_error(errors)
     {
-      "message": "invalid merchant id"
+      "message": "your query could not be completed",
+      "errors": errors
     }
   end
 

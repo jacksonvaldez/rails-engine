@@ -32,7 +32,8 @@ RSpec.describe 'Get A Single Merchant' do
     merchant = JSON.parse(response.body, symbolize_names: true)
 
     expect(merchant[:message]).to be_a(String)
-    expect(merchant[:message]).to eq("invalid merchant id")
+    expect(merchant[:message]).to eq("your query could not be completed")
+    expect(merchant[:errors]).to be_a(Array)
   end
 
 end

@@ -4,7 +4,7 @@ RSpec.describe InvoiceItem do
 
   before(:each) do
     @merchant = Merchant.create!
-    @item = Item.create!(merchant_id: @merchant.id)
+    @item = Item.create!(name: 'item-name', description: 'item-description', unit_price: 50.0, merchant_id: @merchant.id)
     @invoice = Invoice.create!
     @ii = InvoiceItem.create!(invoice_id: @invoice.id, item_id: @item.id ) # arbitrary ids
   end

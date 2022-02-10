@@ -11,7 +11,7 @@ class Api::V1::MerchantsController < ApplicationController
     if merchant.class == Merchant
       render json: MerchantSerializer.merchants_show(merchant)
     else
-      render json: MerchantSerializer.invalid_id, status: 404
+      render json: MerchantSerializer.return_error(["invalid merchant id"]), status: 404
     end
   end
 

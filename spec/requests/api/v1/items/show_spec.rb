@@ -36,7 +36,8 @@ RSpec.describe 'Get A Single Item' do
     item = JSON.parse(response.body, symbolize_names: true)
 
     expect(item[:message]).to be_a(String)
-    expect(item[:message]).to eq("invalid item id")
+    expect(item[:message]).to eq("your query could not be completed")
+    expect(item[:errors]).to be_a(Array)
   end
 
 end
