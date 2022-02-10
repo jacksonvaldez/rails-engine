@@ -1,8 +1,19 @@
 class Api::V1::ItemsController < ApplicationController
 
   def index
-    items = Item.all
-    render json: ItemSerializer.items_index(items)
+    if params[:merchant_id].present?
+      merchant = Merchant.where(id: params[:merchant_id]).first
+
+      if merchant.class == Merchant
+        items = Item.where(merchant_id: params[:merchant_id])
+        render json: ItemSerializer.items_index(items)
+      else
+        render json: Serializer.return_error("invalid merchant id"), status: 404
+      end
+    else
+      items = Item.all
+      render json: ItemSerializer.items_index(items)
+    end
   end
 
   def show
@@ -11,7 +22,7 @@ class Api::V1::ItemsController < ApplicationController
     if item.class == Item
       render json: ItemSerializer.items_show(item)
     else
-      render json: ItemSerializer.return_error(['invalid item id']), status: 404
+      render json: Serializer.return_errors(['invalid item id']), status: 404
     end
   end
 
@@ -22,7 +33,7 @@ class Api::V1::ItemsController < ApplicationController
       render json: ItemSerializer.items_show(item), status: 201
     else
       errors = item.error_messages
-      render json: ItemSerializer.return_error(errors), status: 404
+      render json: Serializer.return_errors(errors), status: 404
     end
   end
 
@@ -34,10 +45,10 @@ class Api::V1::ItemsController < ApplicationController
         render json: ItemSerializer.items_show(item)
       else
         errors = item.error_messages
-        render json: ItemSerializer.return_error(errors), status: 400
+        render json: Serializer.return_errors(errors), status: 400
       end
     else
-      render json: ItemSerializer.return_error(['invalid item id']), status: 404
+      render json: Serializer.return_errors(['invalid item id']), status: 404
     end
   end
 
@@ -48,7 +59,7 @@ class Api::V1::ItemsController < ApplicationController
       item.destroy
       Invoice.destroy_by_item_count
     else
-      render json: ItemSerializer.return_error(['invalid item id']), status: 404
+      render json: Serializer.return_errors(['invalid item id']), status: 404
     end
   end
 

@@ -37,11 +37,4 @@ class ItemSerializer
     }
   end
 
-  def self.return_error(errors)
-    {
-      "message": "your query could not be completed",
-      "errors": errors
-    }
-  end
-
 end
