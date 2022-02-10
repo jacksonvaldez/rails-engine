@@ -23,4 +23,10 @@ Rails.application.routes.draw do
     end
   end
 
+  # REFACTORS:
+  # app/models/invoice.rb
+    # refactor without using ruby
+    # make it so it doesnt go through every invoice in the database
+  # any controller actions that are called from multiple routes
+
 end
