@@ -17,6 +17,10 @@ RSpec.describe 'Finds One Merchant based on search query' do
     merchant = JSON.parse(response.body, symbolize_names: true)
 
     expect(merchant[:data]).to be_a(Hash)
+    expect(merchant[:data][:id]).to eq("#{@merchant_1.id}")
+    expect(merchant[:data][:type]).to eq("merchant")
+    expect(merchant[:data][:attributes]).to be_a(Hash)
+    expect(merchant[:data][:attributes][:name]).to eq("Another Name")
   end
 
   describe 'sad path and edge cases' do
