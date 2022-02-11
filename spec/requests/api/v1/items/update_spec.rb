@@ -46,7 +46,7 @@ RSpec.describe 'Update An Item' do
   end
 
   describe 'sad path and edge cases' do
-    it 'returns error if a merchant id is not found' do
+    it 'returns error if the merchant id is not found or invalid' do
       new_item_attributes = {
         merchant_id: 50847305
       }
@@ -58,6 +58,21 @@ RSpec.describe 'Update An Item' do
       expect(Item.first).to be_a(Item)
       expect(Item.first.merchant_id).to eq(@merchant.id)
       expect(Item.first.merchant_id).to_not eq(50847305)
+      expect(item_response[:message]).to eq('your query could not be completed')
+      expect(item_response[:errors]).to be_a(Array)
+    end
+    it 'returns error if the item id is not found or invalid' do
+      new_item_attributes = {
+        description: 'new-item-description'
+      }
+
+      patch "/api/v1/items/8497238675", params: { item: new_item_attributes }
+
+      item_response = JSON.parse(response.body, symbolize_names: true)
+
+      expect(Item.first).to be_a(Item)
+      expect(Item.first.description).to eq("item-description")
+      expect(Item.first.description).to_not eq("new-item-description")
       expect(item_response[:message]).to eq('your query could not be completed')
       expect(item_response[:errors]).to be_a(Array)
     end
