@@ -6,10 +6,10 @@ class Api::V1::Items::SearchController < ApplicationController
       if items.first.class == Item
         render json: ItemSerializer.items_index(items)
       else
-        render json: Serializer.no_records_found
+        render json: ErrorSerializer.no_records_found
       end
     else
-      render json: Serializer.return_error("name query is either missing or blank"), status: 400
+      render json: ErrorSerializer.return_error("name query is either missing or blank"), status: 400
     end
   end
 end

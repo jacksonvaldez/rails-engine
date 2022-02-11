@@ -1,4 +1,4 @@
-class Serializer
+class ErrorSerializer
 
   def self.return_errors(errors)
     {

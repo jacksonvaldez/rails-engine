@@ -6,10 +6,10 @@ class Api::V1::Merchants::SearchController < ApplicationController
       if merchant.class == Merchant
         render json: MerchantSerializer.merchants_show(merchant)
       else
-        render json: Serializer.no_record_found
+        render json: ErrorSerializer.no_record_found
       end
     else
-      render json: Serializer.return_error("name query is either missing or blank"), status: 400
+      render json: ErrorSerializer.return_error("name query is either missing or blank"), status: 400
     end
 
   end

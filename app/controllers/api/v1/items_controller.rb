@@ -11,7 +11,7 @@ class Api::V1::ItemsController < ApplicationController
     if item.class == Item
       render json: ItemSerializer.items_show(item)
     else
-      render json: Serializer.return_errors(['invalid item id']), status: 404
+      render json: ErrorSerializer.return_errors(['invalid item id']), status: 404
     end
   end
 
@@ -22,7 +22,7 @@ class Api::V1::ItemsController < ApplicationController
       render json: ItemSerializer.items_show(item), status: 201
     else
       errors = item.error_messages
-      render json: Serializer.return_errors(errors), status: 404
+      render json: ErrorSerializer.return_errors(errors), status: 404
     end
   end
 
@@ -34,10 +34,10 @@ class Api::V1::ItemsController < ApplicationController
         render json: ItemSerializer.items_show(item)
       else
         errors = item.error_messages
-        render json: Serializer.return_errors(errors), status: 400
+        render json: ErrorSerializer.return_errors(errors), status: 400
       end
     else
-      render json: Serializer.return_errors(['invalid item id']), status: 404
+      render json: ErrorSerializer.return_errors(['invalid item id']), status: 404
     end
   end
 
@@ -49,7 +49,7 @@ class Api::V1::ItemsController < ApplicationController
       invoices = Invoice.with_no_items
       Invoice.where(id: invoices).destroy_all
     else
-      render json: Serializer.return_errors(['invalid item id']), status: 404
+      render json: ErrorSerializer.return_errors(['invalid item id']), status: 404
     end
   end
 
