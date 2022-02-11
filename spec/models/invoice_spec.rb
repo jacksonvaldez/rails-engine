@@ -22,26 +22,15 @@ RSpec.describe Invoice do
     expect(@invoice.merchant_id).to eq(@merchant.id)
   end
 
-  describe '#item_count' do
-    it 'returns the number of items for the invoice' do
-      expect(@invoice.item_count).to eq(0)
+  describe "::with_no_items" do
+    it 'selects invoices that dont have any items' do
+      expect(Invoice.with_no_items.length).to eq(1)
     end
-  end
-
-  describe "::destroy_by_item_count" do
-    it 'destroys invoices that dont have any items' do
-      expect(Invoice.first).to be_a(Invoice)
-
-      Invoice.destroy_by_item_count
-
-      expect(Invoice.first).to eq(nil)
-    end
-    it 'doesnt destroy invoices that have items' do
+    it 'doesnt select invoices that have items' do
       item = Item.create!(name: 'Name', description: 'Description', unit_price: 35, merchant_id: @merchant.id )
       ii = InvoiceItem.create!(invoice_id: @invoice.id, item_id: item.id)
-      Invoice.destroy_by_item_count
 
-      expect(Invoice.first).to be_a(Invoice)
+      expect(Invoice.with_no_items.length).to eq(0)
     end
   end
 end

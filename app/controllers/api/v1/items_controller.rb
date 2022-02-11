@@ -46,7 +46,7 @@ class Api::V1::ItemsController < ApplicationController
 
     if item.class == Item
       item.destroy
-      Invoice.destroy_by_item_count
+      Invoice.with_no_items.each { |invoice| invoice.destroy }
     else
       render json: Serializer.return_errors(['invalid item id']), status: 404
     end
