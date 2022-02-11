@@ -1,7 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Items Index' do
-
+RSpec.describe 'Items Index By Merchant' do
   before(:each) do
     @merchant_1 = Merchant.create!
     7.times do
@@ -13,14 +12,12 @@ RSpec.describe 'Items Index' do
     end
   end
 
-  it 'returns all items' do
-    get '/api/v1/items'
-
-    expect(response).to be_successful
+  it 'returns items for a specific merchant' do
+    get "/api/v1/merchants/#{@merchant_1.id}/items"
 
     items = JSON.parse(response.body, symbolize_names: true)
 
-    expect(items[:data].length).to eq(12)
+    expect(items[:data].length).to eq(7)
 
     expect(items[:data].first[:id]).to be_a(String)
     expect(items[:data].first[:type]).to be_a(String)
@@ -32,4 +29,20 @@ RSpec.describe 'Items Index' do
     expect(items[:data].first[:attributes][:merchant_id]).to be_a(Integer)
   end
 
+  describe 'sad path and edge cases' do
+    it 'returns error if merchant id doesnt exist' do
+      get "/api/v1/merchants/95723884/items"
+
+      items = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to_not be_successful
+    end
+    it 'returns error if merchant id is invalid' do
+      get "/api/v1/merchants/invalid_merchant_id/items"
+
+      items = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response).to_not be_successful
+    end
+  end
 end

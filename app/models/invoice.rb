@@ -1,5 +1,5 @@
 class Invoice < ApplicationRecord
-  has_many :invoice_items
+  has_many :invoice_items, dependent: :delete_all
   has_many :items, through: :invoice_items
 
   def self.with_no_items

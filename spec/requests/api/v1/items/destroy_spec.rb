@@ -5,6 +5,9 @@ RSpec.describe 'Destroys An Item' do
   before(:each) do
     @merchant = Merchant.create!
     @item = Item.create(name: 'item-name', description: 'item-description', unit_price: 40, merchant_id: @merchant.id)
+    @customer = Customer.create!
+    @invoice = Invoice.create!(customer_id: @customer.id, merchant_id: @merchant.id)
+    @ii = InvoiceItem.create!(invoice_id: @invoice.id, item_id: @item.id)
   end
 
   it 'destroys an item successfully' do
@@ -16,7 +19,9 @@ RSpec.describe 'Destroys An Item' do
   end
 
   it 'destroys any invoice if this was the only item on an invoice' do
+    delete "/api/v1/items/#{@item.id}"
 
+    expect(Invoice.first).to eq(nil)
   end
 
   describe 'sad path and edge cases' do
@@ -44,6 +49,6 @@ RSpec.describe 'Destroys An Item' do
       expect(item_response[:message]).to eq('your query could not be completed')
       expect(item_response[:errors]).to be_a(Array)
     end
-    
+
   end
 end
