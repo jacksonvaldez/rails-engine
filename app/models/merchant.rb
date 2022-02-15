@@ -11,4 +11,12 @@ class Merchant < ApplicationRecord
     merchants.where("name ILIKE ?", "%#{name}%")
   end
 
+  def self.with_most_items(quantity)
+    Merchant.joins(:items)
+    .select('count(items.*) AS item_count, merchants.id, merchants.name')
+    .group('merchants.id')
+    .order(item_count: :desc)
+    .limit(quantity)
+  end
+
 end

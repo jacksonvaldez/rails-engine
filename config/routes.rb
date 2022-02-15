@@ -8,6 +8,8 @@ Rails.application.routes.draw do
       get '/merchants/find', to: 'merchants/search#show'
       get '/items/find_all', to: 'items/search#index'
 
+      get '/merchants/most_items', to: 'merchants/most_items#index' 
+
       # RESTful routes
       resources :merchants, only: [:index, :show]
       get '/merchants/:merchant_id/items', to: 'merchants/items#index'
